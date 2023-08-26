@@ -5,11 +5,12 @@ import UserList from "./UserList";
 function App() {
   const [users, setUsers] = useState([]);
   const addUserHandler = (user) => {
-    setUsers((users) => [...users, user]);
+    setUsers([...users, user]);
   };
   return (
     <div>
-      <UserForm addUser={addUserHandler} />
+      <UserForm onUserAdd={addUserHandler} />
+      <hr />
       <UserList users={users} />
     </div>
   );

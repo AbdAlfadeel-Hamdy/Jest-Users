@@ -12,12 +12,15 @@ test("Show it has two inputs and one button", () => {
 });
 
 test("make sure to addUser when submit form", () => {
-  const result = [];
-  const callback = (...args) => {
-    result.push(args);
-  };
-  render(<UserForm addUser={callback} />);
-  const [nameInput, emailInput] = screen.getAllByRole("textbox");
+  const mock = jest.fn();
+  render(<UserForm onUserAdd={mock} />);
+
+  const nameInput = screen.getByRole("textbox", {
+    name: /name/i,
+  });
+  const emailInput = screen.getByRole("textbox", {
+    name: /email/i,
+  });
 
   user.click(nameInput);
   user.keyboard("adham");
@@ -28,5 +31,32 @@ test("make sure to addUser when submit form", () => {
   const button = screen.getByRole("button");
 
   user.click(button);
-  expect(result[0][0]).toEqual({ name: "adham", email: "adham@test.com" });
+  expect(mock).toHaveBeenCalled();
+  expect(mock).toHaveBeenCalledWith({
+    name: "adham",
+    email: "adham@test.com",
+  });
+});
+
+test("empties the two inputs when form is submitted", () => {
+  render(<UserForm onUserAdd={() => {}} />);
+
+  const nameInput = screen.getByRole("textbox", {
+    name: /name/i,
+  });
+  const emailInput = screen.getByRole("textbox", {
+    name: /email/i,
+  });
+  const button = screen.getByRole("button");
+
+  user.click(nameInput);
+  user.keyboard("adham");
+
+  user.click(emailInput);
+  user.keyboard("adham@test.com");
+
+  user.click(button);
+
+  expect(nameInput).toHaveValue("");
+  expect(emailInput).toHaveValue("");
 });
