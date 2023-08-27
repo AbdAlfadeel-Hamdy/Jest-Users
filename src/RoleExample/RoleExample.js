@@ -7,10 +7,10 @@ const RoleExample = () => {
       <h1>Heading</h1>
       <header>Banner</header>
       <img alt="description" /> Img
-      <img type="checkbox" /> Checkbox
-      <img type="number" /> Spinbutton
-      <img type="radio" /> Radio
-      <img type="text" /> Textbox
+      <input type="checkbox" /> Checkbox
+      <input type="number" /> Spinbutton
+      <input type="radio" /> Radio
+      <input type="text" /> Textbox
       <li>Listitem</li>
       <ul>Listgroup</ul>
     </div>
